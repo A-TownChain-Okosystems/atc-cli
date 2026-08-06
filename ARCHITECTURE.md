@@ -1,70 +1,32 @@
-# 🌳 Architektur — atc-cli
+# ARCHITECTURE.md — atc-cli
 
-> **Stand:** 2026-08-06 | **Version:** v1.0.0
-> **Teil von:** [A-TownChain Ökosystem](https://github.com/A-TownChain-Okosystems)
+> Copyright © Michael Wroblewski / A-TownChain-Okosystems. All Rights Reserved.
 
-## Beschreibung
-
-CLI-Tool für A-TownChain OS. Status, Wallet, Mining, Send, Mint, Explore, Install.
-
-## Metadaten
-
-| Metrik | Wert |
-|--------|------|
-| Layer | L7 — Application |
-| Sprint | 3.0 |
-| ATC-Standards | ATC-24, ATC-86 |
-| Status | 🟠 Aufbau |
-| Code-Repo | [atc-cli](https://github.com/A-TownChain-Okosystems/atc-cli) |
-| Wiki-Repo | [atc-cli-wiki](https://github.com/A-TownChain-Okosystems/atc-cli-wiki) |
-
-## Komponenten-Übersicht
-
-| Komponente | Beschreibung | Status |
-|-----------|-------------|--------|
-| `kai_cli.atc` | CLI-Main: command parsing, help, config, interactive mode | 📋 GEPLANT |
-| `repl.atc` | Interactive REPL: eval, history, multi-line, tab completion | 📋 GEPLANT |
-| `ecdsa_impl.atc` | ECDSA-Tool: keypair gen, sign, verify, tx building | 📋 GEPLANT |
-| `bigquery_pipeline.atc` | BigQuery-Pipeline: GitHub metrics, blockchain stats, sync | 📋 GEPLANT |
-| `atc_issues_summary.atc` | Issue-Tracker: sprint assignment, summary, critical detection | 📋 GEPLANT |
-| `hf_review_pipeline.atc` | HuggingFace-PR-Review: severity, PR summary | 📋 GEPLANT |
-
-## Architektur-Baum
-
-```
+## File Tree
+```tree
 atc-cli/
-├── README.md
-├── LICENSE
-├── .gitignore
-├── STATUS.md
-├── ROADMAP.md
-├── CHANGELOG.md
-├── ARCHITECTURE.md
-├── FILE_REGISTER.md
-├── kai_cli.atc
-├── repl.atc
-├── ecdsa_impl.atc
-├── bigquery_pipeline.atc
-├── atc_issues_summary.atc
-├── hf_review_pipeline.atc
+├── Cargo.toml — Command Line Interface tool manifest
+├── .gitignore — Git ignore settings
+└── src/
+    ├── main.rs — CLI application entry point and command-line argument parser
+    ├── lib.rs — Programmatic CLI engine library for external scripting
+    ├── commands.rs — Subcommand handlers (node, wallet, deploy, query, keygen)
+    ├── client.rs — Asynchronous HTTP/WebSocket client for node communication
+    └── format.rs — Console output formatting (JSON, Table, ANSI colorized terminal)
 ```
 
-## Abhängigkeiten
+## Module Descriptions
+- src/main.rs — Entry point parsing command-line flags and executing matching subcommands.
+- src/lib.rs — Core library allowing programmatic execution of CLI commands.
+- src/commands.rs — Subcommand implementations for node status, wallet management, contract deployment, and key generation.
+- src/client.rs — Handles communication with ShivaCore nodes via API gateway RPC calls.
+- src/format.rs — Renders structured output data into human-readable tables, text, or formatted JSON.
 
-- **ATCLang Stdlib** (atc-stdlib)
-- **ATC VM** (atc-vm)
-- **ATC Kernel** (atc-kernel)
+## Build System
+- Cargo.toml — Standard Rust `std` application built with `clap` and `tokio`.
 
-## Roadmap
-
-| Phase | Aufgabe | Status |
-|-------|---------|--------|
-| Sprint 3.0 | Komponenten-Definition | ✅ ERLEDIGT |
-| Sprint 3.0 | Architektur-Baum | ✅ ERLEDIGT |
-| Sprint 3.0 | Stub-Dateien erstellen | 🔄 IN ARBEIT |
-| Sprint 3.0 | Implementierung | 📋 GEPLANT |
-| Sprint 3.0.1 | Tests | 📋 GEPLANT |
-| Sprint 3.0.2 | Dokumentation | 📋 GEPLANT |
-
----
-*Auto-generiert 2026-08-06 · Aurora (MasterBrain · Base44)*
+## Dependencies
+- clap — Command line argument parser with derive macro support.
+- tokio — Asynchronous event runtime for networking and concurrency.
+- reqwest — Asynchronous HTTP client for API requests.
+- colored / comfy-table — Terminal output styling and table rendering.
