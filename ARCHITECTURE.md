@@ -1,32 +1,31 @@
 # ARCHITECTURE.md — atc-cli
 
-> Copyright © Michael Wroblewski / A-TownChain-Okosystems. All Rights Reserved.
+> Copyright © Michael Wroblewski / ShivaCore / A-TownChain-Okosystems. All Rights Reserved.
 
 ## File Tree
 ```tree
 atc-cli/
-├── Cargo.toml — Command Line Interface tool manifest
-├── .gitignore — Git ignore settings
+├── requirements.txt — Python package dependencies
+├── setup.py — pip installation configuration
+├── README.md — CLI overview and usage guide
 └── src/
-    ├── main.rs — CLI application entry point and command-line argument parser
-    ├── lib.rs — Programmatic CLI engine library for external scripting
-    ├── commands.rs — Subcommand handlers (node, wallet, deploy, query, keygen)
-    ├── client.rs — Asynchronous HTTP/WebSocket client for node communication
-    └── format.rs — Console output formatting (JSON, Table, ANSI colorized terminal)
+    ├── __init__.py — Package initialization
+    ├── cli.py — Main CLI entry point and command dispatcher
+    └── commands/ — Individual command implementations
 ```
 
 ## Module Descriptions
-- src/main.rs — Entry point parsing command-line flags and executing matching subcommands.
-- src/lib.rs — Core library allowing programmatic execution of CLI commands.
-- src/commands.rs — Subcommand implementations for node status, wallet management, contract deployment, and key generation.
-- src/client.rs — Handles communication with ShivaCore nodes via API gateway RPC calls.
-- src/format.rs — Renders structured output data into human-readable tables, text, or formatted JSON.
+- `cli.py` — Main CLI entry point using click, handles argument parsing and command routing
+- `commands/` — Subcommand implementations (node, wallet, blockchain, deploy)
+- `requirements.txt` — Dependencies: click, rich, requests, pyyaml
 
 ## Build System
-- Cargo.toml — Standard Rust `std` application built with `clap` and `tokio`.
+- Python 3.11+ with pip
+- Entry point: `python -m src.cli` or `atc-cli` after install
 
 ## Dependencies
-- clap — Command line argument parser with derive macro support.
-- tokio — Asynchronous event runtime for networking and concurrency.
-- reqwest — Asynchronous HTTP client for API requests.
-- colored / comfy-table — Terminal output styling and table rendering.
+- atc-gateway (API Gateway on port 4000)
+- atc-wallet (wallet functionality)
+
+## Status (Active/Migrated/Legacy)
+Active (Python, CLI Tool)
